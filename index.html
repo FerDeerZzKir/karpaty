@@ -76,7 +76,7 @@
       width: max-content;
       animation: moveTrain 30s linear infinite;
       will-change: transform;
-      position: relative; /* убрать absolute */
+      position: relative; 
     }
     .wagon {
       width: 160px;
@@ -172,7 +172,7 @@
   </div>
 
   <script>
-    // Отсчет времени (26 дней вперед)
+
     const countdown = document.getElementById('countdown');
     const targetDate = new Date();
     targetDate.setDate(targetDate.getDate() + 26);
@@ -191,7 +191,6 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    // Рандомный поезд с 7 вагонами из 7 фото
     const totalPhotos = 15;
     const wagonCount = 15;
     const train = document.querySelector('.train');
