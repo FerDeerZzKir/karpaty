@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Відлік до НМТ 2025</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f3f3;
+      padding: 30px;
+      color: #222;
+    }
+
+     .glow-button {
+      background: linear-gradient(145deg, #00d4ff, #007a9c);
+      border: none;
+      color: white;
+      padding: 15px 40px;
+      font-size: 18px;
+      font-family: Arial, sans-serif;
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px #00d4ff, 0 0 20px #007a9c;
+      text-decoration: none;
+      margin: 30px auto 0 auto;
+      z-index: 3;
+      width: fit-content;
+    }
+
+    @media (max-width: 768px) {
+      .glow-button {
+      font-size: 15px;
+      padding: 10px 20px;
+      margin-top: 18px;
+      }
+    }
+    @media (max-width: 480px) {
+      .glow-button {
+      font-size: 13px;
+      padding: 8px 10px;
+      margin-top: 12px;
+      }
+    }
+
+    .glow-button::before {
+      content: '';
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(0,212,255,0.4), transparent 70%);
+      animation: pulse 2s infinite;
+      z-index: 0;
+    }
+
+    .glow-button span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .glow-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #00d4ff, 0 0 30px #007a9c;
+    }
+    .section {
+      background: #fff;
+      border-left: 5px solid #007BFF;
+      margin-bottom: 20px;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+    h2 {
+      margin-top: 0;
+      color: #007BFF;
+    }
+    ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+    .countdown {
+      font-weight: bold;
+      color: #e60000;
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="glow-button">
+    <span>Карпаті</span>
+  </a><br><h1>⏳ Відлік до НМТ 2025</h1>
+
+  <div id="timers"></div>
+
+  <script>
+    const schedule = [
+      {
+        datetime: "2025-06-04T10:00:00",
+        students: ["Поліна Бабушкіна", "Артем Кальчук"]
+      },
+      {
+        datetime: "2025-06-06T10:00:00",
+        students: ["Кароліна Гребінка", "Софія Пищик"]
+      },
+      {
+        datetime: "2025-06-09T10:00:00",
+        students: ["Ігор Герасименко", "Софія Рясик"]
+      },
+      {
+        datetime: "2025-06-16T10:00:00",
+        students: ["Іван Гуцул", "Іван Колосинщин", "Даніїл Ліпатов", "Марія Лозова", "Кирил Позняк", "Олег Чекменьов"]
+      },
+      {
+        datetime: "2025-06-17T10:00:00",
+        students: ["Каміла Годунок", "Софія Луняка"]
+      },
+      {
+        datetime: "2025-06-18T10:00:00",
+        students: ["Вадим Золотов"]
+      },
+      {
+        datetime: "2025-06-19T10:00:00",
+        students: ["Маргарита Гусарук", "Катерина Савченко", "Карина Сергієнко", "Валерія Яровенко"]
+      }
+    ];
+
+    function createCountdownElements() {
+      const container = document.getElementById('timers');
+      schedule.forEach((entry, index) => {
+        const dateObj = new Date(entry.datetime);
+        const localDate = dateObj.toLocaleDateString('uk-UA');
+        const localTime = dateObj.toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
+
+        const div = document.createElement('div');
+        div.className = 'section';
+        div.innerHTML = `
+          <h2>📅 ${localDate} — 🕙 ${localTime}</h2>
+          <ul>
+            ${entry.students.map(name => `<li>${name}</li>`).join('')}
+          </ul>
+          <div class="countdown" id="countdown-${index}">Залишилось...</div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function updateCountdowns() {
+      const now = new Date().getTime();
+      schedule.forEach((entry, index) => {
+        const target = new Date(entry.datetime).getTime();
+        const diff = target - now;
+
+        if (diff <= 0) {
+          document.getElementById(`countdown-${index}`).innerText = "✅ Час настав!";
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById(`countdown-${index}`).innerText =
+          `${days} дн. ${hours} год. ${minutes} хв. ${seconds} сек.`;
+      });
+    }
+
+    createCountdownElements();
+    updateCountdowns();
+    setInterval(updateCountdowns, 1000);
+  </script>
+</body>
+</html>

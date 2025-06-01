@@ -21,6 +21,63 @@
       position: relative;
       min-height: 100vh;
     }
+
+    .glow-button {
+      background: linear-gradient(145deg, #00d4ff, #007a9c);
+      border: none;
+      color: white;
+      padding: 15px 40px;
+      font-size: 18px;
+      font-family: Arial, sans-serif;
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px #00d4ff, 0 0 20px #007a9c;
+      text-decoration: none;
+      margin: 30px auto 0 auto;
+      z-index: 3;
+      width: fit-content;
+    }
+
+    @media (max-width: 768px) {
+      .glow-button {
+      font-size: 15px;
+      padding: 10px 20px;
+      margin-top: 18px;
+      }
+    }
+    @media (max-width: 480px) {
+      .glow-button {
+      font-size: 13px;
+      padding: 8px 10px;
+      margin-top: 12px;
+      }
+    }
+
+    .glow-button::before {
+      content: '';
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(0,212,255,0.4), transparent 70%);
+      animation: pulse 2s infinite;
+      z-index: 0;
+    }
+
+    .glow-button span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .glow-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #00d4ff, 0 0 30px #007a9c;
+    }
+
     .title {
       text-align: center;
       margin-top: 40px;
@@ -166,6 +223,9 @@
   <h1 class="title">Када едем 🚆</h1>
   <div class="route">Київ → Карпати</div>
   <div class="countdown" id="countdown"></div>
+    <a href="nmt.html" class="glow-button">
+    <span>НМТ</span>
+  </a>
 
   <div class="train-wrapper">
     <div class="train"></div>
@@ -174,7 +234,8 @@
   <script>
 
     const countdown = document.getElementById('countdown');
-    const targetDate = new Date("2025-06-27T18:00:00");
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 26);
 
     function updateCountdown() {
       const now = new Date().getTime();
