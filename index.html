@@ -46,16 +46,16 @@
 
     @media (max-width: 768px) {
       .glow-button {
-      font-size: 15px;
-      padding: 10px 20px;
-      margin-top: 18px;
+        font-size: 15px;
+        padding: 10px 20px;
+        margin-top: 18px;
       }
     }
     @media (max-width: 480px) {
       .glow-button {
-      font-size: 13px;
-      padding: 8px 10px;
-      margin-top: 12px;
+        font-size: 13px;
+        padding: 8px 10px;
+        margin-top: 12px;
       }
     }
 
@@ -87,6 +87,7 @@
       z-index: 3;
       position: relative;
     }
+
     .route {
       text-align: center;
       font-size: 1.2rem;
@@ -95,6 +96,7 @@
       z-index: 3;
       position: relative;
     }
+
     .countdown {
       margin: 20px auto;
       padding: 10px 20px;
@@ -108,15 +110,18 @@
       z-index: 3;
       position: relative;
     }
+
     @keyframes flicker {
       0%, 100% {opacity: 1;}
       50% {opacity: 0.6;}
     }
+
     @keyframes pulse {
       0% {transform: scale(1);}
       50% {transform: scale(1.05);}
       100% {transform: scale(1);}
     }
+
     .train-wrapper {
       position: fixed;
       bottom: 100px;
@@ -126,6 +131,7 @@
       z-index: 2;
       height: 130px;
     }
+
     .train {
       display: flex;
       padding-left: 20px;
@@ -135,6 +141,7 @@
       will-change: transform;
       position: relative; 
     }
+
     .wagon {
       width: 160px;
       height: 120px;
@@ -147,6 +154,7 @@
       position: relative;
       margin-bottom: -10px;
     }
+
     .wagon::before {
       content: "";
       position: absolute;
@@ -158,6 +166,7 @@
       border-radius: 50%;
       box-shadow: 60px 0 #555;
     }
+
     .wagon img {
       width: 100%;
       height: 100%;
@@ -166,10 +175,12 @@
       pointer-events: none;
       user-select: none;
     }
+
     @keyframes moveTrain {
       0% { transform: translateX(-120%); }
       100% { transform: translateX(120%); }
     }
+
     .sky {
       position: absolute;
       top: 0;
@@ -181,6 +192,7 @@
       opacity: 0.05;
       z-index: 0;
     }
+
     @media (max-width: 768px) {
       .title {
         font-size: 1.8rem;
@@ -223,7 +235,7 @@
   <h1 class="title">Када едем 🚆</h1>
   <div class="route">Київ → Карпати</div>
   <div class="countdown" id="countdown"></div>
-    <a href="nmt.html" class="glow-button">
+  <a href="nmt.html" class="glow-button">
     <span>НМТ</span>
   </a>
 
@@ -232,14 +244,25 @@
   </div>
 
   <script>
-
     const countdown = document.getElementById('countdown');
-    const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + 26);
+
+    // Цільова дата — 22 червня о 18:00
+    let now = new Date();
+    let targetDate = new Date(now.getFullYear(), 5, 22, 18, 0, 0); // Місяць 5 = червень
+
+    // Якщо поточна дата пізніше цільової — встановлюємо наступний рік
+    if (now > targetDate) {
+      targetDate = new Date(now.getFullYear() + 1, 5, 22, 18, 0, 0);
+    }
 
     function updateCountdown() {
       const now = new Date().getTime();
       const distance = targetDate.getTime() - now;
+
+      if (distance <= 0) {
+        countdown.innerHTML = "🚂 Вже поїхали!";
+        return;
+      }
 
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -248,6 +271,7 @@
 
       countdown.innerHTML = `${days} днів ${hours} год ${minutes} хв ${seconds} сек`;
     }
+
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
