@@ -248,11 +248,11 @@
 
     // Цільова дата — 22 червня о 18:00
     let now = new Date();
-    let targetDate = new Date(now.getFullYear(), 5, 22, 18, 0, 0); // Місяць 5 = червень
+    let targetDate = new Date(now.getFullYear(), 5, 27, 18, 0, 0); // Місяць 5 = червень
 
     // Якщо поточна дата пізніше цільової — встановлюємо наступний рік
     if (now > targetDate) {
-      targetDate = new Date(now.getFullYear() + 1, 5, 22, 18, 0, 0);
+      targetDate = new Date(now.getFullYear() + 1, 5, 27, 18, 0, 0);
     }
 
     function updateCountdown() {
